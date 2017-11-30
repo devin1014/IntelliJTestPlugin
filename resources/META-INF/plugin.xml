@@ -1,0 +1,76 @@
+<idea-plugin>
+    <id>com.your.company.unique.plugin.id</id>
+    <name>Plugin display name here</name>
+    <version>1.0</version>
+    <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+
+    <description><![CDATA[
+      Enter short description for your plugin here.<br>
+      <em>most HTML tags may be used</em>
+    ]]></description>
+
+    <change-notes><![CDATA[
+      Add change notes here.<br>
+      <em>most HTML tags may be used</em>
+    ]]>
+    </change-notes>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="145.0" />
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <actions>
+        <!--####-->
+        <!--Sort life cycle-->
+        <!--####-->
+        <group id="sorter" text="Sort Lifecycle Methods" popup="true" description="Sorts the lifecycle methods of an activity">
+
+            <action class="lifecycle.action.SortStartAction" id="sortStart" text="Place at Start of Class" description="Places the sorted methods at the start of the class">
+                <keyboard-shortcut first-keystroke="control alt K" keymap="$default" />
+            </action>
+
+            <action class="lifecycle.action.SortEndAction" id="sortEnd" text="Place at End of Class" description="Places the sorted methods at the end of the class">
+                <keyboard-shortcut first-keystroke="shift control alt K" keymap="$default" />
+            </action>
+
+            <add-to-group group-id="CodeMenu" anchor="last" />
+
+        </group>
+
+        <!--####-->
+        <!--Singleton-->
+        <!--####-->
+        <action id="SingletonTest.templete.SingletonAction" class="singleton.SingletonAction" text="SingletonGenerate"
+                description="generate singleton  template ">
+            <add-to-group group-id="NewGroup" anchor="after" relative-to-action="NewFile" />
+        </action>
+
+        <action id="3421" class="stylecreator.PasteAction" text="Paste Style"
+                description="Paste Style">
+            <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="PasteMultiple" />
+            <!--<add-to-group group-id="ConsoleView.PopupMenu" anchor="after" relative-to-action="ConsoleView.Copy" />-->
+            <add-to-group group-id="EditorActions" anchor="first" />
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift D" />
+        </action>
+
+        <action id="android-selector-chapek" class="selectorgenerator.SelectorChapekAction" text="Generate Android Selectors"
+                description="Automatically generates drawable selectors from appropriately named resources">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="after"
+                          relative-to-action="ProjectViewPopupMenuRefactoringGroup" />
+        </action>
+
+        <action id="nl.localization.creator" class="localization.LocalizationCreator" text="LocalizationCreator" description="create localization file">
+            <add-to-group group-id="CodeMenu" anchor="last" />
+        </action>
+    </actions>
+
+</idea-plugin>
