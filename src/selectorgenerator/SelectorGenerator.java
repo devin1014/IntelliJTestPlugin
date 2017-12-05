@@ -20,7 +20,7 @@ import nu.xom.Attribute;
 import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Serializer;
-import selectorgenerator.utils.Log;
+import utils.LogUtil;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -40,7 +40,7 @@ public class SelectorGenerator
 
     public static void generate(VirtualFile newFile, List<SelectorDetector.Result> detectorResults)
     {
-        Log.d("generating XML:");
+        LogUtil.d("generating XML:");
         Element root = new Element("selector");
         root.addNamespaceDeclaration(NS, SCHEMA);
         List<String> allStatesWithoutNormal = new ArrayList<String>();
@@ -56,7 +56,7 @@ public class SelectorGenerator
         }
         for (SelectorDetector.Result result : detectorResults)
         {
-            Log.d("fileName=" + result.drawableName + ", states:" + result.states);
+            LogUtil.d("fileName=" + result.drawableName + ", states:" + result.states);
             Element item = new Element("item");
             Attribute attribute = new Attribute("drawable", "@drawable/" + result.drawableName);
             attribute.setNamespace(NS, SCHEMA);
@@ -67,7 +67,7 @@ public class SelectorGenerator
                 addState(item, Constants.sMapping.get(state).attributeName, result.states.contains(state)
                         ? (!defaultValue) : defaultValue);
             }
-            Log.d("row=" + item.toXML());
+            LogUtil.d("row=" + item.toXML());
             root.appendChild(item);
         }
         Document doc = new Document(root);
@@ -81,7 +81,7 @@ public class SelectorGenerator
         }
         catch (IOException e)
         {
-            Log.e(e);
+            LogUtil.e(e);
         }
         finally
         {
@@ -93,7 +93,7 @@ public class SelectorGenerator
                 }
                 catch (IOException e)
                 {
-                    Log.e(e);
+                    LogUtil.e(e);
                 }
             }
         }

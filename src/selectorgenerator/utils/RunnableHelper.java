@@ -25,6 +25,10 @@ import com.intellij.openapi.project.Project;
  */
 public class RunnableHelper
 {
+    private RunnableHelper()
+    {
+    }
+
     public static void runReadCommand(Project project, Runnable cmd)
     {
         CommandProcessor.getInstance().executeCommand(project, new ReadAction(cmd), "Foo", "Bar");
@@ -35,8 +39,11 @@ public class RunnableHelper
         CommandProcessor.getInstance().executeCommand(project, new WriteAction(cmd), "Foo", "Bar");
     }
 
+    // ---- Action
     static class ReadAction implements Runnable
     {
+        Runnable cmd;
+
         ReadAction(Runnable cmd)
         {
             this.cmd = cmd;
@@ -46,12 +53,12 @@ public class RunnableHelper
         {
             ApplicationManager.getApplication().runReadAction(cmd);
         }
-
-        Runnable cmd;
     }
 
     static class WriteAction implements Runnable
     {
+        Runnable cmd;
+
         WriteAction(Runnable cmd)
         {
             this.cmd = cmd;
@@ -61,11 +68,6 @@ public class RunnableHelper
         {
             ApplicationManager.getApplication().runWriteAction(cmd);
         }
-
-        Runnable cmd;
     }
 
-    private RunnableHelper()
-    {
-    }
 }

@@ -29,47 +29,40 @@
     </extensions>
 
     <actions>
-        <!--####-->
         <!--Sort life cycle-->
-        <!--####-->
         <group id="sorter" text="Sort Lifecycle Methods" popup="true" description="Sorts the lifecycle methods of an activity">
-
             <action class="lifecycle.action.SortStartAction" id="sortStart" text="Place at Start of Class" description="Places the sorted methods at the start of the class">
                 <keyboard-shortcut first-keystroke="control alt K" keymap="$default" />
             </action>
-
             <action class="lifecycle.action.SortEndAction" id="sortEnd" text="Place at End of Class" description="Places the sorted methods at the end of the class">
                 <keyboard-shortcut first-keystroke="shift control alt K" keymap="$default" />
             </action>
-
             <add-to-group group-id="CodeMenu" anchor="last" />
-
         </group>
 
-        <!--####-->
         <!--Singleton-->
-        <!--####-->
-        <action id="SingletonTest.templete.SingletonAction" class="singleton.SingletonAction" text="SingletonGenerate"
-                description="generate singleton  template ">
+        <action id="SingletonTest.templete.SingletonAction" class="singleton.SingletonAction" text="SingletonGenerate" description="generate singleton  template ">
             <add-to-group group-id="NewGroup" anchor="after" relative-to-action="NewFile" />
         </action>
 
-        <action id="3421" class="stylecreator.PasteAction" text="Paste Style"
-                description="Paste Style">
+        <!--Style-->
+        <action id="3421" class="stylecreator.PasteAction" text="Paste Style" description="Paste Style">
             <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="PasteMultiple" />
             <!--<add-to-group group-id="ConsoleView.PopupMenu" anchor="after" relative-to-action="ConsoleView.Copy" />-->
             <add-to-group group-id="EditorActions" anchor="first" />
             <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift D" />
         </action>
 
+        <!--SelectorChapek-->
         <action id="android-selector-chapek" class="selectorgenerator.SelectorChapekAction" text="Generate Android Selectors"
                 description="Automatically generates drawable selectors from appropriately named resources">
-            <add-to-group group-id="ProjectViewPopupMenu" anchor="after"
-                          relative-to-action="ProjectViewPopupMenuRefactoringGroup" />
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="after" relative-to-action="ProjectViewPopupMenuRefactoringGroup" />
         </action>
 
-        <action id="nl.localization.creator" class="localization.LocalizationCreator" text="LocalizationCreator" description="create localization file">
+        <!--Localization-->
+        <action id="nl.localization.creator" class="localization.LocalizationAnAction" text="Localization generator" description="create localization file">
             <add-to-group group-id="CodeMenu" anchor="last" />
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="after" relative-to-action="ProjectViewPopupMenuRefactoringGroup" />
         </action>
     </actions>
 

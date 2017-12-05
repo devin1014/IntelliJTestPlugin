@@ -28,7 +28,6 @@ import javax.xml.transform.stream.StreamResult;
  */
 public class StylerEngine
 {
-
     /**
      * Gets lines with future style<br>
      * <code>android:layout_width="match_parent"<br>

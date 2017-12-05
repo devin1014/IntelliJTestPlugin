@@ -18,31 +18,31 @@ import java.util.HashMap;
 import java.util.regex.Pattern;
 
 /**
- * selectorgenerator.Constants for various stuff used in whole plugin.
+ * selector generator. Constants for various stuff used in whole plugin.
  *
  * @author David Vávra (david@inmite.eu)
  */
-public class Constants
+class Constants
 {
-    public static final String NORMAL = "_normal";
-    public static final String FOCUSED = "_focused";
-    public static final String PRESSED = "_pressed";
-    public static final String SELECTED = "_selected";
-    public static final String CHECKED = "_checked";
-    public static final String DISABLED = "_disabled";
-    public static final String HOVERED = "_hovered";
-    public static final String CHECKABLE = "_checkable";
-    public static final String ACTIVATED = "_activated";
-    public static final String WINDOW_FOCUSED = "_windowfocused";
-    public static String[] SUFFIXES = new String[]{NORMAL, PRESSED, FOCUSED, SELECTED, CHECKED, DISABLED, HOVERED, CHECKABLE, ACTIVATED, WINDOW_FOCUSED};
-    public static Pattern VALID_FOLDER_PATTERN = Pattern.compile("^drawable(-[a-zA-Z0-9]+)*$");
-    public static String EXPORT_FOLDER = "drawable";
-    public static HashMap<String, State> sMapping;
+    static final String NORMAL = "_normal";
+    private static final String FOCUSED = "_focused";
+    private static final String PRESSED = "_pressed";
+    private static final String SELECTED = "_selected";
+    private static final String CHECKED = "_checked";
+    private static final String DISABLED = "_disabled";
+    private static final String HOVERED = "_hovered";
+    private static final String CHECKABLE = "_checkable";
+    private static final String ACTIVATED = "_activated";
+    private static final String WINDOW_FOCUSED = "_window_focused";
+    static String[] SUFFIXES = new String[]{NORMAL, PRESSED, FOCUSED, SELECTED, CHECKED, DISABLED, HOVERED, CHECKABLE, ACTIVATED, WINDOW_FOCUSED};
+    static Pattern VALID_FOLDER_PATTERN = Pattern.compile("^drawable(-[a-zA-Z0-9]+)*$");
+    static String EXPORT_FOLDER = "drawable";
+    static HashMap<String, State> sMapping;
 
     static
     {
         // mapping from file suffixes into android attributes and their default values
-        sMapping = new HashMap<String, State>();
+        sMapping = new HashMap<>();
         sMapping.put(FOCUSED, new State("state_focused", false));
         sMapping.put(PRESSED, new State("state_pressed", false));
         sMapping.put(SELECTED, new State("state_selected", false));
@@ -56,9 +56,9 @@ public class Constants
 
     static class State
     {
-        public String attributeName;
+        String attributeName;
 
-        public boolean defaultValue;
+        boolean defaultValue;
 
         State(String attributeName, boolean defaultValue)
         {

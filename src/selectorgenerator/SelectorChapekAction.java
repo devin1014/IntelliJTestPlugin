@@ -25,9 +25,9 @@ import com.intellij.openapi.wm.StatusBar;
 import com.intellij.openapi.wm.WindowManager;
 import com.intellij.ui.awt.RelativePoint;
 
-import selectorgenerator.utils.Log;
-
 import java.util.regex.Matcher;
+
+import utils.LogUtil;
 
 /**
  * Action which is launched when user clicks the menu item. It handles related UI-stuff.
@@ -39,7 +39,7 @@ public class SelectorChapekAction extends AnAction
     @Override
     public void actionPerformed(AnActionEvent e)
     {
-        Log.d("---- Start - menu item clicked ----");
+        LogUtil.d("---- Start - menu item clicked ----");
 
         VirtualFile selectedFile = DataKeys.VIRTUAL_FILE.getData(e.getDataContext());
 

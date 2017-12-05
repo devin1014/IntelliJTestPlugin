@@ -12,9 +12,9 @@ import com.intellij.ui.awt.RelativePoint;
 /**
  * Created by Aleksandr on 06.10.2015.
  */
-public class StylerUtils
+class StylerUtils
 {
-    public static void showBalloonPopup(DataContext dataContext, String htmlText, MessageType messageType)
+    static void showBalloonPopup(DataContext dataContext, String htmlText, MessageType messageType)
     {
         StatusBar statusBar = WindowManager.getInstance().getStatusBar(DataKeys.PROJECT.getData(dataContext));
 

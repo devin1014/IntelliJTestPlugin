@@ -21,8 +21,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import selectorgenerator.utils.Log;
 import selectorgenerator.utils.RunnableHelper;
+import utils.LogUtil;
 
 /**
  * Handles detection of selector files from resources and creation of those files.
@@ -48,11 +48,11 @@ public class SelectorDetector
 
         for (VirtualFile child : children)
         {
-            Log.d("processing " + child.getName());
+            LogUtil.d("processing " + child.getName());
 
             List<String> suffixes = detectSuffixes(child);
 
-            Log.d("suffixes: " + suffixes);
+            LogUtil.d("suffixes: " + suffixes);
 
             if (suffixes.size() > 0)
             {
@@ -60,7 +60,7 @@ public class SelectorDetector
                 {
                     if (matches(child, other))
                     {
-                        Log.d("matches: " + child.getName() + " and " + other.getName());
+                        LogUtil.d("matches: " + child.getName() + " and " + other.getName());
 
                         createFile(child, selectedFolder, suffixes);
 
@@ -105,7 +105,7 @@ public class SelectorDetector
 
         if (mCreatedFiles.contains(fileName))
         {
-            Log.d("skipping, already generated");
+            LogUtil.d("skipping, already generated");
 
             return;
         }
@@ -125,10 +125,10 @@ public class SelectorDetector
                     {
                         drawableFolder = folder.getParent().createChildDirectory(null, Constants.EXPORT_FOLDER);
 
-                        Log.d("drawable folder created");
+                        LogUtil.d("drawable folder created");
                     }
 
-                    Log.d("trying to create: " + drawableFolder + " " + fileName);
+                    LogUtil.d("trying to create: " + drawableFolder + " " + fileName);
 
                     VirtualFile newFile = drawableFolder.findChild(fileName);
 
@@ -136,18 +136,18 @@ public class SelectorDetector
                     {
                         newFile = drawableFolder.createChildData(null, fileName);
 
-                        Log.d("file created: " + fileName);
+                        LogUtil.d("file created: " + fileName);
 
                         SelectorGenerator.generate(newFile, detectStates(file, folder));
                     }
                     else
                     {
-                        Log.d("skipping, file already exists:" + fileName);
+                        LogUtil.d("skipping, file already exists:" + fileName);
                     }
                 }
                 catch (IOException e)
                 {
-                    Log.e(e);
+                    LogUtil.e(e);
                 }
             }
         });
@@ -192,9 +192,9 @@ public class SelectorDetector
 
     static class Result
     {
-        public List<String> states;
+        List<String> states;
 
-        public String drawableName;
+        String drawableName;
 
         Result(List<String> states, String drawableName)
         {
