@@ -7,7 +7,8 @@ package utils;
  */
 public class LogUtil
 {
-    public static final boolean DEBUG = true;
+    // FIXME,release lib should set to false!
+    private static final boolean DEBUG = true;
 
     public static void d(String output)
     {

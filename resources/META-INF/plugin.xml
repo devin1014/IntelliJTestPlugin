@@ -25,7 +25,16 @@
     -->
 
     <extensions defaultExtensionNs="com.intellij">
+        <treeStructureProvider implementation="foldingplugin.ProjectStructureProvider" />
+    </extensions>
+
+    <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
+    </extensions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <errorHandler implementation="com.intellij.diagnostic.ITNReporter" />
+        <applicationConfigurable instance="foldingplugin.SettingConfigurable" />
     </extensions>
 
     <actions>
@@ -60,10 +69,18 @@
         </action>
 
         <!--Localization-->
-        <action id="nl.localization.creator" class="localization.LocalizationAnAction" text="Localization generator" description="create localization file">
+        <group id="NLFramework" text="NL Framework" popup="true" description="include neulion framework plugin">
+            <action id="nl.localization.creator" class="localization.LocalizationAnAction" text="Localization generator" description="create localization file">
+                <!--<keyboard-shortcut first-keystroke="control alt K" keymap="$default" />-->
+            </action>
             <add-to-group group-id="CodeMenu" anchor="last" />
-            <add-to-group group-id="ProjectViewPopupMenu" anchor="after" relative-to-action="ProjectViewPopupMenuRefactoringGroup" />
+        </group>
+
+        <!--folding plugin-->
+        <action id="ComposeAction" class="foldingplugin.ComposeAction">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="first" />
         </action>
+
     </actions>
 
 </idea-plugin>

@@ -1,13 +1,14 @@
 package localization;
 
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
@@ -28,45 +29,51 @@ class LocalizationGenerator
 
     private Project mProject;
 
-    private List<Pair<String, String>> mKeyList;
-
     LocalizationGenerator(Project project)
     {
         mProject = project;
-
-        mKeyList = new ArrayList<>();
     }
 
     void generate(VirtualFile virtualFile, InputStream inputStream)
     {
-        if (virtualFile.isDirectory())
-        {
-            ActionCompat.runWriteCommand(mProject, () -> {
-                VirtualFile newFile = virtualFile.findChild(LOCALIZATION_NAME);
+        final VirtualFile directoryVirtualFile = virtualFile.isDirectory() ? virtualFile : virtualFile.getParent();
 
-                if (newFile == null || !newFile.exists())
+        LogUtil.d("try to generate " + LOCALIZATION_NAME + " in \"" + directoryVirtualFile.getPath() + "\"");
+
+        final List<Pair<String, String>> list = parseInputStream(inputStream);
+
+        ActionCompat.runWriteCommand(mProject, () -> {
+
+            VirtualFile localizationFile = directoryVirtualFile.findChild(LOCALIZATION_NAME);
+
+            try
+            {
+                if (localizationFile == null || !localizationFile.exists())
                 {
-                    try
-                    {
-                        newFile = virtualFile.createChildData(null, LOCALIZATION_NAME);
+                    localizationFile = directoryVirtualFile.createChildData(null, LOCALIZATION_NAME);
 
-                        LogUtil.d("file created: " + newFile);
-
-                        parseInputStream(inputStream);
-
-                        newFile.setBinaryContent(createJavaFile(newFile).getBytes());
-                    }
-                    catch (IOException e)
-                    {
-                        e.printStackTrace();
-                    }
+                    LogUtil.d("create file.");
                 }
-            });
-        }
+
+                localizationFile.setBinaryContent(createJavaFile(localizationFile, list).getBytes(), System.currentTimeMillis(), System.currentTimeMillis());
+
+                LogUtil.d("reset file content.");
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        });
+
+        Messages.showInfoMessage(String.format(GENERATOR_SUCCESS, list.size()), "Generator Success");
     }
 
-    private void parseInputStream(InputStream inputStream)
+    private static final String GENERATOR_SUCCESS = "成功生成 %d 个Key";
+
+    private List<Pair<String, String>> parseInputStream(InputStream inputStream)
     {
+        List<Pair<String, String>> resultList = new LinkedList<>();
+
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
         try
@@ -85,7 +92,7 @@ class LocalizationGenerator
 
                     //String value = result[1];
 
-                    mKeyList.add(new Pair<>(javaKey, key));
+                    resultList.add(new Pair<>(javaKey, key));
                 }
 
                 s = reader.readLine();
@@ -95,9 +102,11 @@ class LocalizationGenerator
         {
             e.printStackTrace();
         }
+
+        return resultList;
     }
 
-    private String createJavaFile(VirtualFile virtualFile)
+    private String createJavaFile(VirtualFile virtualFile, List<Pair<String, String>> list)
     {
         StringBuilder builder = new StringBuilder();
 
@@ -108,7 +117,7 @@ class LocalizationGenerator
         builder.append(addClass(virtualFile.getName()));
 
         //field
-        for (Pair<String, String> keyValue : mKeyList)
+        for (Pair<String, String> keyValue : list)
         {
             builder.append(addField(keyValue));
         }
